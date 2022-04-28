@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Input and output files
+*.in
+*.out
+
+# Directorys
+__pycache__
+input
+output
