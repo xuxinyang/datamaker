@@ -53,5 +53,8 @@
         "activityBar.background": "#1E2F3F",
         "titleBar.activeBackground": "#2A4258",
         "titleBar.activeForeground": "#F8FAFC"
+    },
+    "files.associations": {
+        "string": "cpp"
     }
 }
