@@ -5,11 +5,16 @@ using namespace std;
 int main(int argc, char **argv)
 {
     registerGen(argc, argv, 1);    // register the random generator function
-    for (int i = 1; i <= 100; i++) // generate 10 test cases
+    // 取得第一个参数，即生成的测试用例的起始数字
+    int start = atoi(argv[1]);
+    // 取得第二个参数，即生成的测试用例的结束数字
+    int end = atoi(argv[2]);
+    // 取得第三个参数，即生成的测试用例的数据范围
+    int range = atoi(argv[3]);
+    for (int i = start; i <= end; i++) // generate (end-start+1) test cases
     {
         startTest(i);
-        // 创造一个含元音字母的随机字符串，长度在1-3*10^5之间
-        int n = rnd.next(1, 1000);
+        int n = rnd.next(1, range);
         printf("%d\n", n);
         for (int i = 1; i <= n; i++)
         {

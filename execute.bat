@@ -6,49 +6,46 @@ ECHO Time:  %time%
 ECHO User:  caomuyilin
 
 ECHO -------------------------------------------start-------------------------------------------
-IF EXIST input (
-    RMDIR /S /Q input
-)
-IF EXIST output (
-    RMDIR /S /Q output
+IF EXIST data (
+    RMDIR /S /Q data
 )
 
-IF EXIST *.exe (
-    DEL *.exe
+IF EXIST gen_input.exe (
+    DEL gen_input.exe
 )
+IF EXIST stand_code.exe (
+    DEL stand_code.exe
+)
+:: 读取 data.config 文件
+SET /P 
+
 
 :: 修改gen_input.cpp and stand_code.cpp
 python format_code.py
 
 :: 编译程序并执行生成数据命令
 g++ -o gen_input gen_input.cpp
-gen_input
 
+:: 调用python代码生成数据
 
-IF NOT EXIST input (
-    MKDIR input
+IF NOT EXIST data (
+    MKDIR data
 )
 :: 移动1-10到input目录
-FOR /L %%i IN (1, 1, 50) DO (
+FOR /L %%i IN (1, 1, %1) DO (
     :: 移动文件
     ECHO Moving file %%i...
-    MOVE %%i input/
+    MOVE %%i data/
 )
 :: 修改文件名
-CD input
+CD data
 REN * *.in
 CD ..
 :: 执行程序
 g++ -o stand_code stand_code.cpp
-FOR /L %%i IN (1, 1, 50) DO (
+FOR /L %%i IN (1, 1, %1) DO (
     stand_code input/%%i.in %%i.out
 )
-
-:: 移动程序到output目录
-IF NOT EXIST output (
-    MKDIR output
-)
-MOVE *.out output/
 
 ECHO The program has been executed, please check the input and output directory.
 ECHO If no error, you can update data to oj.
